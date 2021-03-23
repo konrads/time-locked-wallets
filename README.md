@@ -1,6 +1,5 @@
 # Time Locked Wallets
 
-Build status (master): [![CI](https://github.com/konrads/time-locked-wallets/actions/workflows/ci.yml/badge.svg)](https://github.com/konrads/time-locked-wallets/actions)
 Build status (master): [![CI](/../../actions/workflows/ci.yml/badge.svg)](/../../actions)
 
 
