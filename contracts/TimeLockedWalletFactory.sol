@@ -1,15 +1,15 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.5.16;
 
 import "./TimeLockedWallet.sol";
 
 contract TimeLockedWalletFactory {
  
-    mapping(address => address[]) wallets;
+    mapping(address => TimeLockedWallet[]) wallets;
 
     function getWallets(address _user) 
         public
         view
-        returns(address[])
+        returns(TimeLockedWallet[] memory)
     {
         return wallets[_user];
     }
@@ -17,7 +17,7 @@ contract TimeLockedWalletFactory {
     function newTimeLockedWallet(address _owner, uint256 _unlockDate)
         payable
         public
-        returns(address wallet)
+        returns(TimeLockedWallet wallet)
     {
         // Create new wallet.
         wallet = new TimeLockedWallet(msg.sender, _owner, _unlockDate);
@@ -31,14 +31,14 @@ contract TimeLockedWalletFactory {
         }
 
         // Send ether from this transaction to the created contract.
-        wallet.transfer(msg.value);
+        address(wallet).transfer(msg.value);
 
         // Emit event.
-        Created(wallet, msg.sender, _owner, now, _unlockDate, msg.value);
+        emit Created(address(wallet), msg.sender, _owner, now, _unlockDate, msg.value);
     }
 
     // Prevents accidental sending of ether to the factory
-    function () public {
+    function () external {
         revert();
     }
 

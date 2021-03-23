@@ -1,5 +1,8 @@
 # Time Locked Wallets
 
+Build status (master): [![Node CI](https://github.com/konrads/time-locked-wallets/workflows/ci/badge.svg))](https://github.com/konrads/time-locked-wallets/actions)
+
+
 Please find more details about this project in [this blog post](https://www.toptal.com/ethereum-smart-contract/time-locked-wallet-truffle-tutorial#distinguish-only-choice-engineers).
 
 This ÐApp is deployed on Rinkeby and published with GitHub pages here: https://radek1st.github.io/time-locked-wallets/.

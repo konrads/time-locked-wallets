@@ -1,0 +1,20 @@
+name: CI
+
+on:
+  push:
+    branches: master
+    paths-ignore:
+    - "docs/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - run: npm install -g truffle
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+  
+    - name: test
+      run: truffle test
