@@ -1,6 +1,7 @@
 # Time Locked Wallets
 
 Build status (master): [![CI](https://github.com/konrads/time-locked-wallets/actions/workflows/ci.yml/badge.svg)](https://github.com/konrads/time-locked-wallets/actions)
+Build status (master): [![CI](/actions/workflows/ci.yml/badge.svg)](/actions)
 
 
 Please find more details about this project in [this blog post](https://www.toptal.com/ethereum-smart-contract/time-locked-wallet-truffle-tutorial#distinguish-only-choice-engineers).
