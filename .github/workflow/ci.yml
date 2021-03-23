@@ -10,11 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
     - run: npm install -g truffle
-
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-  
-    - name: test
-      run: truffle test
+    - run: truffle test
