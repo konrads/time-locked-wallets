@@ -1,4 +1,5 @@
-pragma solidity ^0.5.16;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.2;
 
 import "./TimeLockedWallet.sol";
 
@@ -14,7 +15,7 @@ contract TimeLockedWalletFactory {
         return wallets[_user];
     }
 
-    function newTimeLockedWallet(address _owner, uint256 _unlockDate)
+    function newTimeLockedWallet(address payable _owner, uint256 _unlockDate)
         payable
         public
         returns(TimeLockedWallet wallet)
@@ -31,14 +32,14 @@ contract TimeLockedWalletFactory {
         }
 
         // Send ether from this transaction to the created contract.
-        address(wallet).transfer(msg.value);
+        payable(address(wallet)).transfer(msg.value);
 
         // Emit event.
-        emit Created(address(wallet), msg.sender, _owner, now, _unlockDate, msg.value);
+        emit Created(address(wallet), msg.sender, _owner, block.timestamp, _unlockDate, msg.value);
     }
 
     // Prevents accidental sending of ether to the factory
-    function () external {
+    fallback () external {
         revert();
     }
 

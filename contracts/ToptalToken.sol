@@ -1,4 +1,5 @@
-pragma solidity ^0.5.16;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.2;
 
 import './SafeMath.sol';
 import './ERC20.sol';
@@ -17,7 +18,7 @@ contract ToptalToken is ERC20 {
   string public symbol = "TTT";
   uint256 public decimals = 6;
 
-  constructor() public {
+  constructor() {
     totalSupply = 1000000 * (10 ** decimals);
     balances[msg.sender] = totalSupply;
   }
@@ -25,9 +26,9 @@ contract ToptalToken is ERC20 {
   /**
   * @dev Gets the balance of the specified address.
   * @param _owner The address to query the the balance of.
-  * @return An uint256 representing the amount owned by the passed address.
+  * @return balance uint256 representing the amount owned by the passed address.
   */
-  function balanceOf(address _owner) public view returns (uint256 balance) {
+  function balanceOf(address _owner) public override view returns (uint256 balance) {
     return balances[_owner];
   }
 
@@ -36,7 +37,7 @@ contract ToptalToken is ERC20 {
   * @param _to The address to transfer to.
   * @param _value The amount to be transferred.
   */
-  function transfer(address _to, uint256 _value) public returns (bool) {
+  function transfer(address _to, uint256 _value) public override returns (bool) {
     require(_to != address(0));
     require(_value <= balances[msg.sender]);
 
@@ -53,7 +54,7 @@ contract ToptalToken is ERC20 {
    * @param _to address The address which you want to transfer to
    * @param _value uint256 the amount of tokens to be transferred
    */
-  function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {
+  function transferFrom(address _from, address _to, uint256 _value) public override returns (bool) {
     require(_to != address(0));
     require(_value <= balances[_from]);
     require(_value <= allowed[_from][msg.sender]);
@@ -75,7 +76,7 @@ contract ToptalToken is ERC20 {
    * @param _spender The address which will spend the funds.
    * @param _value The amount of tokens to be spent.
    */
-  function approve(address _spender, uint256 _value) public returns (bool) {
+  function approve(address _spender, uint256 _value) public override returns (bool) {
     allowed[msg.sender][_spender] = _value;
     emit Approval(msg.sender, _spender, _value);
     return true;
@@ -87,11 +88,11 @@ contract ToptalToken is ERC20 {
    * @param _spender address The address which will spend the funds.
    * @return A uint256 specifying the amount of tokens still available for the spender.
    */
-  function allowance(address _owner, address _spender) public view returns (uint256) {
+  function allowance(address _owner, address _spender) public override view returns (uint256) {
     return allowed[_owner][_spender];
   }
 
-  event Transfer(address indexed from, address indexed to, uint256 value);
-  event Approval(address indexed owner, address indexed spender, uint256 value);
+  // event Transfer(address indexed from, address indexed to, uint256 value);
+  // event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 

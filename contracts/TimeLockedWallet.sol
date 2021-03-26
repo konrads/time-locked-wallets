@@ -1,11 +1,12 @@
-pragma solidity ^0.5.16;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.2;
 
 import "./ERC20.sol";
 
 contract TimeLockedWallet {
 
     address public creator;
-    address public owner;
+    address payable public owner;
     uint256 public unlockDate;
     uint256 public createdAt;
 
@@ -16,31 +17,31 @@ contract TimeLockedWallet {
 
     constructor(
         address _creator,
-        address _owner,
+        address payable _owner,
         uint256 _unlockDate
-    ) public {
+    ) {
         creator = _creator;
         owner = _owner;
         unlockDate = _unlockDate;
-        createdAt = now;
+        createdAt = block.timestamp;
     }
 
     // keep all the ether sent to this address
-    function() payable external { 
+    receive() payable external { 
         emit Received(msg.sender, msg.value);
     }
 
     // callable by owner only, after specified time
     function withdraw() onlyOwner public {
-       require(now >= unlockDate);
-       //now send all the balance
-       msg.sender.transfer(address(this).balance);
+       require(block.timestamp >= unlockDate);
+       // now send all the balance
+       payable(msg.sender).transfer(address(this).balance);
        emit Withdrew(msg.sender, address(this).balance);
     }
 
     // callable by owner only, after specified time, only for Tokens implementing ERC20
     function withdrawTokens(address _tokenContract) onlyOwner public {
-       require(now >= unlockDate);
+       require(block.timestamp >= unlockDate);
        ERC20 token = ERC20(_tokenContract);
        //now send all the token balance
        uint256 tokenBalance = token.balanceOf(address(this));
